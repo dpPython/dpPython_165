@@ -1,7 +1,4 @@
-coverage==4.5.3
-pyflakes==2.1.1
-Flaks-RESTful==0.3.7
+Flask-RESTful==0.3.7
 Flask-Script==2.0.6
 Flask==1.0.3
-flake8==3.7.7
 requests==2.22.0
