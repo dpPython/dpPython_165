@@ -2,15 +2,20 @@ from flask import jsonify, request
 from flask_restful import Resource
 import uuid
 
-from .utils.schemas import ProjectSchema, DataSchema
+from .utils.schemas import ProjectSchema, ProjectsSchema, DataSchema
 from .models import Projects, Data, db
 
 project_schema = ProjectSchema()
+projects_schema = ProjectsSchema()
 data_schema = DataSchema()
 
 
 # /api/projects
 class ProjectsInitializer(Resource):
+    def get(self):
+        projects = Projects.query.all()
+        return jsonify({'data': project_schema.dump(projects, many=True).data})
+
     def post(self):
         data = project_schema.load(request.json)[0]
 
@@ -34,7 +39,7 @@ class ProjectsResources(Resource):
         data = project_schema.load(request.json, partial=('contract_id',))[0]
 
         contract_id = data['contract_id']
-        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        project = Projects.query.filter_by(id=id).first()
         project.contract_id = contract_id
         db.session.commit()
 
@@ -47,7 +52,7 @@ class StatusUpdater(Resource):
         data = project_schema.load(request.json, partial=('status',))[0]
 
         new_status = data['status']
-        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        project = Projects.query.filter_by(id=id).first()
         project.status = new_status
         db.session.commit()
 

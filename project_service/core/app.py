@@ -8,5 +8,5 @@ app.register_blueprint(api_blueprint)
 api.add_resource(ProjectsInitializer, '/projects')
 api.add_resource(ProjectsResources, '/projects/<id>')
 
-api.add_resource(DataHandler, '/projects/data/<id>')
-api.add_resource(StatusUpdater, '/projects/status/<id>')
+api.add_resource(DataHandler, '/projects/<id>/data')
+api.add_resource(StatusUpdater, '/projects/<id>/status')
