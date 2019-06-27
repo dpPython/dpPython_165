@@ -4,5 +4,3 @@ from flask import Blueprint
 
 api_blueprint = Blueprint('api', __name__)
 api = Api(api_blueprint)
-
-# api.add_resource(ProjectCRUD, '/projects')
