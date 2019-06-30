@@ -2,11 +2,11 @@ from flask import jsonify, request
 from flask_restful import Resource
 import uuid
 
-from .utils.schemas import ProjectSchema, ProjectsSchema, DataSchema
+from .utils.schemas import ProjectSchema, DataSchema
 from .models import Projects, Data, db
+from .utils.session import session
 
 project_schema = ProjectSchema()
-projects_schema = ProjectsSchema()
 data_schema = DataSchema()
 
 
@@ -22,8 +22,9 @@ class ProjectsInitializer(Resource):
         project_name = data['name']
         contract_id = data['contract_id']
         new_project = Projects(name=project_name, contract_id=contract_id, status='waiting_for_data')
-        db.session.add(new_project)
-        db.session.commit()
+
+        with session() as db:
+            db.add(new_project)
 
         return jsonify({'status': 'ok'})
 
