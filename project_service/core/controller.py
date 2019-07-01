@@ -3,7 +3,7 @@ import uuid
 from flask import request
 from flask_restful import Resource
 
-from .models import Projects, Data, db
+from .models import Projects, Data
 from .utils.schemas import ProjectSchema, DataSchema
 from .utils.session import session
 from .utils.logger_creator import LoggerCreator
@@ -38,11 +38,12 @@ class ProjectsInitializer(Resource):
 
         return {'status': 'ok'}
 
+    # def delete(self) :
+
 
 # /projects/<id>
 class ProjectsResources(Resource):
     def get(self, id):
-
         project = Projects.query.filter_by(id=id).first()
 
         return {
@@ -60,10 +61,19 @@ class ProjectsResources(Resource):
         contract_id = data['contract_id']
 
         with session() as db:
-            db.query(Projects).filter(Projects.id == id).\
+            db.query(Projects).filter(Projects.id == id). \
                 update({'contract_id': contract_id})
 
         return {'status': 'updated'}
+
+    def delete(self, id):
+        logger.info(f'/projects/<id>/delete DELETE (project_id) {id}')
+
+        with session() as db:
+            db.query(Projects).filter(Projects.id == id). \
+                delete()
+
+        return {'status': 'deleted successfully'}
 
 
 # /projects/<id>/status
@@ -75,7 +85,7 @@ class StatusUpdater(Resource):
         logger.info(f'/projects/<id>/status PUT (update_status) {status}')
 
         with session() as db:
-            db.query(Projects).filter(Projects.id == id).\
+            db.query(Projects).filter(Projects.id == id). \
                 update({'status': status})
 
         return {'status': 'status_updated_successfully'}
@@ -105,3 +115,12 @@ class DataHandler(Resource):
                 db.add(data_about_room)
 
         return {'status': 'write_all_data'}
+
+    # delete all data owned by project by project_id
+    def delete(self, id):
+
+        with session() as db:
+            db.query(Data).filter(Data.project_id == id).\
+                delete()
+
+        return {'status': 'delete_successfully'}
