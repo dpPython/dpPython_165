@@ -1,11 +1,14 @@
-from flask import jsonify, request
-from flask_restful import Resource
 import uuid
 
-from .utils.schemas import ProjectSchema, DataSchema
-from .models import Projects, Data, db
-from .utils.session import session
+from flask import jsonify, request
+from flask_restful import Resource
 
+from .models import Projects, Data, db
+from .utils.schemas import ProjectSchema, DataSchema
+from .utils.session import session
+from .utils.logger.log_config import LoggerCreator
+
+logger = LoggerCreator('controller', 'controller.log', '%(asctime)s  %(name)s - %(levelname)s - %(message)s').logger
 project_schema = ProjectSchema()
 data_schema = DataSchema()
 
@@ -14,7 +17,7 @@ data_schema = DataSchema()
 class ProjectsInitializer(Resource):
     def get(self):
         projects = Projects.query.all()
-        return jsonify({'data': project_schema.dump(projects, many=True).data})
+        return {'data': project_schema.dump(projects, many=True).data}
 
     def post(self):
         data = project_schema.load(request.json)[0]
@@ -26,14 +29,14 @@ class ProjectsInitializer(Resource):
         with session() as db:
             db.add(new_project)
 
-        return jsonify({'status': 'ok'})
+        return {'status': 'ok'}
 
 
 # /api/projects/<id>
 class ProjectsResources(Resource):
     def get(self, id):
         project = Projects.query.filter_by(id=id).first()
-        return jsonify(dict(id=id, name=project.name, contract_id=project.contract_id, status=project.name))
+        return dict(id=id, name=project.name, contract_id=str(project.contract_id), status=project.name)
 
     # update contract_id
     def put(self, id):
