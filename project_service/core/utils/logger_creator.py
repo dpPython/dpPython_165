@@ -26,7 +26,7 @@ class LoggerCreator:
         else:
             logger.setLevel(logging.INFO)
 
-        fh = logging.FileHandler(log_file_name)
+        fh = logging.FileHandler(f'core/logs/{log_file_name}')
         formatter = logging.Formatter(format_string, datefmt='%m/%d/%Y %I:%M:%S %p')
 
         fh.setFormatter(formatter)
