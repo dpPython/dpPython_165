@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from Model import db, Contract, ContractSchema
+from ..model import db, Contract, ContractSchema
 
 contracts_schema = ContractSchema(many=True)
 contract_schema = ContractSchema()
