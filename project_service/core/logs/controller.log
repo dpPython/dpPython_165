@@ -13,3 +13,10 @@
 07/01/2019 02:32:46 PM - INFO - /projects/<id> PUT (contract_id) {'contract_id': UUID('abf4d46e-a985-465e-b391-0a6d7c271124'), 'name': '1'}
 07/01/2019 02:36:08 PM - INFO - /projects/<id>/status PUT (update_status) {'status': '1'}
 07/01/2019 02:37:20 PM - INFO - /projects/<id> PUT (contract_id) {'contract_id': UUID('abf4d46e-a985-465e-b391-0a6d7c271134')}
+07/01/2019 04:22:14 PM - INFO - /projects/<id>/delete DELETE (project_id) 38992df0-a3bc-47c1-b13b-759cf9d78b83
+07/01/2019 05:44:28 PM - INFO - /projects POST (data): {'contract_id': UUID('abf4d46e-a985-465e-b391-0a6d7c271134')}
+07/01/2019 05:44:46 PM - INFO - /projects POST (data): {'contract_id': UUID('abf4d46e-a985-465e-b391-0a6d7c271134')}
+07/01/2019 05:45:10 PM - INFO - /projects POST (data): {'name': '1', 'contract_id': UUID('abf4d46e-a985-465e-b391-0a6d7c271134')}
+07/01/2019 05:45:10 PM - DEBUG - /projects POST (write_data) <Projects (transient 139659794769400)>
+07/01/2019 05:50:04 PM - INFO - /projects/<id>/delete DELETE (project_id) 4a3b1209-78b5-4e32-94dc-1edfde14d39b
+07/01/2019 05:54:29 PM - INFO - /projects POST (data): {}
