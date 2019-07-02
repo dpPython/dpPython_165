@@ -1,9 +1,9 @@
 import uuid
 
-from flask import request
+from flask import request, abort, jsonify
 from flask_restful import Resource
 
-from .models import Projects, Data
+from .models import Projects, Data, db
 from .utils.schemas import ProjectSchema, DataSchema
 from .utils.session import session
 from .utils.logger_creator import LoggerCreator
@@ -38,7 +38,6 @@ class ProjectsInitializer(Resource):
 
         return {'status': 'ok'}
 
-    # def delete(self) :
 
 
 # /projects/<id>
@@ -124,3 +123,79 @@ class DataHandler(Resource):
                 delete()
 
         return {'status': 'delete_successfully'}
+
+
+# /projects/<id>/calc
+class ProjectsCalc(Resource):
+
+    def get(self, id):
+
+        """
+        Method to fetch data of the particular project for calculation
+        :param id: an id of the project
+        """
+        _project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        if not _project:
+            abort(404)
+            return {"message": "There is no such project"}, 404
+
+        _id = str(_project.id)
+        _data = Data.query.filter_by(id=uuid.UUID(_id))
+        if not _data:
+            abort(400)
+            return {"message": "No input data provided"}, 400
+        if not bool(_data):
+            abort(400)
+            return {"message": "Empty data"}, 400
+
+        new_status = "calculation"
+        with session() as db:
+            db.query(Projects).filter(Projects.id == id).\
+                update({'status': new_status})
+
+        try:
+            output_prj = project_schema.dump(_project).data
+            output_data = data_schema.dump(_data).data
+        except:
+            abort(400)
+            return {"message": "Something is wrong"}, 400
+        return jsonify({"project": output_prj, "data": output_data}), 200
+
+    def post(self, id):
+        """
+        Method to retrieve  calculated data of the particular project
+        :param id: an id of the project
+        """
+
+        # deserialize input json
+        entry_data = request.get_json()
+        if not entry_data:
+            return {"message": "No input data provided"}, 400
+        result = entry_data["result"]
+        return {"result": result}, 200
+
+
+# /api/calc/status/<id>
+class ProjectsCalcResult(Resource):
+    def put(self, id):
+        """
+        Method to update project status data which are in calculation progress
+        :param id: an id of the project
+        """
+
+        # deserialize input json
+        json_data = request.get_json()
+        if not json_data:
+            return {"message": "No input data provided"}, 400
+
+        new_status = json_data["status"]
+
+        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        if not project:
+            return {"message": "Can't update - no such project"}, 404
+
+        with session() as db:
+            db.query(Projects).filter(Projects.id == id). \
+                update({'status': new_status})
+
+        return {"message": "Status succefully updated for {}".format(new_status)}, 200

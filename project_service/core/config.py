@@ -19,7 +19,7 @@ migrate = Migrate()
 def postgres_uri():
     # if os.getenv("DOCKER"):
         # return 'postgresql://postgres@db_projects_service:5432/postgres'
-    return 'postgresql://arthur:arthur234@localhost/projects'
+    return 'postgresql://eugene:1401@localhost/projects'
     # return 'postgresql://{user}:{passwd}@{host}:{port}/{db}'.format(
     #         user=DBUSER,
     #         passwd=DBPASS,
