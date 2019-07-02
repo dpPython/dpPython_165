@@ -1,0 +1,31 @@
+{
+  "name": "parsers",
+  "offset": 40,
+  "field": [
+    "action",
+    "format",
+    "type"
+  ],
+  "columns": {
+    "address": {
+      "col": "address",
+      "action": "",
+      "type": "str"
+    },
+    "square": {
+      "col": "square",
+      "action": "",
+      "type": "decimal"
+    },
+    "price": {
+      "col": "price per sq m",
+      "action": "get_currency",
+      "type": "list"
+    },
+    "published": {
+      "col": "publish date",
+      "action": "due_to",
+      "type": "dict"
+    }
+  }
+}

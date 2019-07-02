@@ -1,4 +1,7 @@
 Flask-RESTful==0.3.7
 Flask-Script==2.0.6
 Flask==1.0.3
+Flask-Uploads==0.2.1
+marshmallow
 requests==2.22.0
+Celery
