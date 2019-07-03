@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_uploads import configure_uploads
 
+from .services import services_senders as s
 from .api import api_1_0_blueprint
 from .config import FlaskConfig
 from .resources import csv_uploader
@@ -24,6 +25,8 @@ def create_app():
     app_init.register_blueprint(api_1_0_blueprint, url_prefix='/api')
     configure_uploads(app_init, (csv_uploader,))
     register_errors(app_init, (300, 400))
+    app_init.projects = s.ProjectService()
+    app_init.session_handler = s.SessionService()
     return app_init
 
 
