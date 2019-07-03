@@ -5,7 +5,6 @@ import os
 
 from .api import api_blueprint, api
 
-
 DBUSER = 'postgres'
 DBPASS = ''
 DBHOST = 'db'
@@ -19,13 +18,12 @@ migrate = Migrate()
 def postgres_uri():
     if os.getenv("DOCKER"):
         return 'postgresql://postgres@db_projects_service:5432/postgres'
-    # return 'postgresql://arthur:arthur234@localhost/projects'
     return 'postgresql://{user}:{passwd}@{host}:{port}/{db}'.format(
-            user=DBUSER,
-            passwd=DBPASS,
-            host=DBHOST,
-            port=DBPORT,
-            db=DBNAME)
+        user=DBUSER,
+        passwd=DBPASS,
+        host=DBHOST,
+        port=DBPORT,
+        db=DBNAME)
 
 
 def create_app():

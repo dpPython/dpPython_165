@@ -3,6 +3,7 @@ import uuid
 from flask import request
 from flask_restful import Resource
 
+from .config import db
 from .models import Projects, Data
 from .utils.schemas import ProjectSchema, DataSchema
 from .utils.session import session
@@ -27,14 +28,19 @@ class ProjectsInitializer(Resource):
 
         logger.info(f'/projects POST (data): {data}')
 
-        project_name = data['name']
-        contract_id = data['contract_id']
+        try:
+            project_name = data['name']
+            contract_id = data['contract_id']
+
+        except KeyError:
+            abort(404)
         new_project = Projects(name=project_name, contract_id=contract_id, status='default')
 
         logger.debug(f'/projects POST (write_data) {new_project}')
 
-        with session() as db:
-            db.add(new_project)
+        new_project = Projects(name=project_name, contract_id=contract_id, status='waiting_for_data')
+        db.session.add(new_project)
+        db.session.commit()
 
         return {'status': 'ok'}
 

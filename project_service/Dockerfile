@@ -20,4 +20,4 @@ ENV DOCKER=1
 CMD ["python", "manage.py", "db", "init"]
 CMD ["python", "manage.py", "db", "migrate"]
 CMD ["python", "manage.py", "db", "upgrade"]
-CMD ["python", "manage.py", "runserver"]
+CMD ["python", "manage.py", "runserver" ]
