@@ -49,10 +49,10 @@ class Rule(db.Model, AddUpdateDelete):
 
     name = db.Column(db.String(150), unique=True, nullable=False)
     creation_date = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
-    f_operand = db.Column(db.Float, nullable=False)
-    s_operand = db.Column(db.Float, nullable=False)
+    f_operand = db.Column(db.String(250), nullable=False)
+    s_operand = db.Column(db.String(250), nullable=False)
     operator = db.Column(db.String(2), nullable=False)
-    coefficient = db.Column(db.Float, nullable=False)
+    coefficient = db.Column(db.String(250), nullable=False)
 
     def __init__(self, name, f_operand, s_operand, operator, coefficient):
         self.name = name
@@ -70,10 +70,10 @@ class RuleSchema(ma.Schema):
     url = ma.URLFor('api.ruleresource', id='<id>', _external=True)
     contracts = fields.Nested('ContractSchema', many=True, exclude=('rule',))
     creation_date = fields.DateTime()
-    f_operand = fields.Float(validate=validate.Length(1))
-    s_operand = fields.Float(validate=validate.Length(1))
+    f_operand = fields.String(validate=validate.Length(1))
+    s_operand = fields.String(validate=validate.Length(1))
     operator = fields.String(validate=validate.Length(1))
-    coefficient = fields.Float(validate=validate.Length(1))
+    coefficient = fields.String(validate=validate.Length(1))
 
 
 class ContractSchema(ma.Schema):
