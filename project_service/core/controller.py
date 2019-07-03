@@ -39,7 +39,6 @@ class ProjectsInitializer(Resource):
         return {'status': 'ok'}
 
 
-
 # /projects/<id>
 class ProjectsResources(Resource):
     def get(self, id):
@@ -99,19 +98,30 @@ class DataHandler(Resource):
 
         with session() as db:
             for data in data['data']:
-                data_about_room = Data(
+                project_data = Data(
                     project_id=uuid.UUID(id),
-                    address=data['address'],
-                    city=data['city'],
-                    square=data['square'],
-                    living_square=data['living_square'],
-                    currency_value=data['price']['currency_value'],
-                    currency=data['price']['currency'],
-                    published_date=data['published_date'],
-                    rooms=data['rooms'],
-                    toilets=data['toilets']
+                    field_1=data['field_1'],
+                    field_2=data['field_2'],
+                    field_3=data['field_3'],
+                    field_4=data['field_4'],
+                    field_5=data['field_5'],
+                    field_6=data['field_6'],
+                    field_7=data['field_7'],
+                    field_8=data['field_8'],
+                    field_9=data['field_9'],
+                    field_10=data['field_10'],
+                    field_11=data['field_11'],
+                    field_12=data['field_12'],
+                    field_13=data['field_13'],
+                    field_14=data['field_14'],
+                    field_15=data['field_15'],
+                    field_16=data['field_16'],
+                    field_17=data['field_17'],
+                    field_18=data['field_18'],
+                    field_19=data['field_19'],
+                    field_20=data['field_20']
                 )
-                db.add(data_about_room)
+                db.add(project_data)
 
         return {'status': 'write_all_data'}
 
@@ -122,7 +132,7 @@ class DataHandler(Resource):
             db.query(Data).filter(Data.project_id == id).\
                 delete()
 
-        return {'status': 'delete_successfully'}
+        return {'status': 'deleted_successfully'}
 
 
 # /projects/<id>/calc
@@ -166,6 +176,12 @@ class ProjectsCalc(Resource):
         Method to retrieve  calculated data of the particular project
         :param id: an id of the project
         """
+
+        # obtain certain project
+        _project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        if not _project:
+            abort(404)
+            return {"message": "There is no such project"}, 404
 
         # deserialize input json
         entry_data = request.get_json()

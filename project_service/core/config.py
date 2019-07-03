@@ -28,6 +28,19 @@ def postgres_uri():
     #         db=DBNAME)
 
 
+class BaseConfig(object):
+    DEBUG = False
+    SECRET_KEY = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8bp\x0c...'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://eugene:1401@localhost/projects'
+
+
+class TestConfig(BaseConfig):
+    DEBUG = True
+    TESTING = True
+    WTF_CSRF_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = 'postgresql://eugene:1401@localhost/projects'
+
+
 def create_app():
     app = Flask(__name__)
     api.init_app(app)
