@@ -7,3 +7,5 @@ class Config(object):
     url = 'postgresql://{}:{}@{}:{}/{}'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'postgresql://postgres:11111111@localhost:5432/users'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+#dsdsds
