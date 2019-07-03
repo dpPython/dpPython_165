@@ -24,7 +24,6 @@ def process_publish_date(value):
     return False if today < publish else False
 
 
-
 ACTIONS = {
     'get_currency': process_currency,
     'due_to': process_publish_date,

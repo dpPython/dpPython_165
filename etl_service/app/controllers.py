@@ -1,8 +1,10 @@
+from csv import DictReader
+
+from celery import chain, group
+
 from .celery.app import celery_app
 from .parsers.base_parser import FileParser, ACTIONS
 from .services.services_senders import ProjectService
-from csv import DictReader
-import time
 
 
 class DataTransferCommunicator:
@@ -14,22 +16,22 @@ class DataTransferCommunicator:
 
     @celery_app.task
     def transfer_data(self):
-        self.send_status(self.project, "started")
-        self.send_chunks()
-        self.send_status(self.project, "uploaded")
+        started = self.send_status.delay(self, self.project, "started")
+        ended = self.send_status.delay(self, self.project, "finished")
+        workflow = chain(started, self.chunk_group_register, ended)()
+        result = workflow.get()
+        return result
 
+    @celery_app.task
     def send_status(self, uuid, status):
         response = self.project_service.put(uuid, status)
         return response
 
-    def send_chunks(self, chunk_size=50):
+    def chunk_group_register(self, chunk_size=50):
         results = []
         for chunk in self._create_chunk(chunk_size):
             results.append(self._send_chunk.delay(self, self.project, chunk))
-        while True:
-            if all(result.ready() for result in results):
-                break
-            time.sleep(2)
+        return group(results)
 
     def _create_chunk(self, chunk_size):
         offset_csv = self.file_processor.csv_file()
