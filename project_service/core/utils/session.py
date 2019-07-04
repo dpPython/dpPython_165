@@ -17,8 +17,8 @@ def session(auto_commit=True):
         yield session
         if auto_commit:
             session.commit()
-    except:
+    except Exception as e:
         session.rollback()
-        raise
+        raise e
     finally:
         session.close()

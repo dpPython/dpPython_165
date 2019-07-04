@@ -4,12 +4,13 @@ from flask import request, abort, jsonify
 from flask_restful import Resource
 
 from .models import Projects, Data
-from .utils.schemas import ProjectSchema, DataSchema, StatusSchema
+from .utils.schemas import ProjectSchema, DataSchema, StatusSchema, DataNestedSchema
 from .utils.session import session
 
 DATA = 0
 ERRORS = 1
 
+nested_schema = DataNestedSchema()
 project_schema = ProjectSchema()
 data_schema = DataSchema()
 status_schema = StatusSchema()
@@ -33,13 +34,12 @@ class ProjectsInitializer(Resource):
         project_name = data['name']
         contract_id = data['contract_id']
         project = Projects(name=project_name, contract_id=contract_id, status='default')
-        print(project.id)
 
         with session() as db:
             db.add(project)
             project_id = db.query(Projects).filter(Projects.contract_id == contract_id).first()
 
-            return {'status': 'create_successfully', 'id': str(project_id)}, 201
+        return {'status': 'create_successfully', 'id': str(project_id)}, 201
 
 
 # /projects/<id>
@@ -73,6 +73,7 @@ class ProjectsResources(Resource):
 
         return {'status': 'updated'}, 200
 
+    # TODO add authorization
     def delete(self, id):
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
@@ -103,10 +104,7 @@ class StatusUpdater(Resource):
 # /projects/<id>/data/
 class DataHandler(Resource):
     def post(self, id):
-        request_data = data_schema.load(request.json)
-
-        data = request_data[DATA]
-        errors = request_data[ERRORS]
+        data, errors = data_schema.load(request.json)
 
         if errors:
             abort(404, 'Invalid data')
@@ -131,49 +129,21 @@ class DataHandler(Resource):
         return {'status': 'write_all_data'}, 201
 
     # delete all data owned by project by project_id
-    def delete(self, id):
-        with session() as db:
-            db.query(Data).filter(Data.project_id == id). \
-                delete()
+    # def delete(self, id):
+    #     with session() as db:
+    #         db.query(Data).filter(Data.project_id == id). \
+    #             delete()
+    #
+    #     return {'status': 'deleted_successfully'}, 200
 
-        return {'status': 'deleted_successfully'}, 200
 
-
-# /projects/<id>/calc
+# /projects/<id>/calculations
 class ProjectsCalc(Resource):
 
     def get(self, id):
 
-        """
-        Method to fetch data of the particular project for calculation
-        :param id: an id of the project
-        """
-        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
-        if not project:
-            abort(404)
-            return {"message": "There is no such project"}, 404
-
-        id = str(project.id)
-        data = Data.query.filter_by(id=uuid.UUID(id))
-        if not data:
-            abort(400)
-            return {"message": "No input data provided"}, 400
-        if not bool(data):
-            abort(400)
-            return {"message": "Empty data"}, 400
-
-        new_status = "calculation"
-        with session() as db:
-            db.query(Projects).filter(Projects.id == id). \
-                update({'status': new_status})
-
-        try:
-            output_prj = project_schema.dump(project).data
-            output_data = data_schema.dump(data).data
-        except KeyError:
-            abort(400)
-            return {"message": "Something is wrong"}, 400
-        return jsonify({"project": output_prj, "data": output_data}), 200
+        data = Data.query.filter_by(project_id=id).all()
+        return {'data': nested_schema.dump(data, many=True).data}, 200
 
     def post(self, id):
         """
