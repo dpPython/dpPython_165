@@ -4,7 +4,7 @@ from marshmallow import Schema, fields, pprint
 class ProjectSchema(Schema):
     id = fields.Str()
     status = fields.Str()
-    name = fields.Str(required=True)
+    name = fields.Str()
     contract_id = fields.UUID(required=True)
 
 

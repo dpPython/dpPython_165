@@ -2,9 +2,7 @@ import uuid
 
 from flask import request, abort, jsonify
 from flask_restful import Resource
-from marshmallow import ValidationError
 
-from .config import db
 from .models import Projects, Data
 from .utils.schemas import ProjectSchema, DataSchema
 from .utils.session import session
@@ -19,7 +17,7 @@ data_schema = DataSchema()
 class ProjectsInitializer(Resource):
     def get(self):
         projects = Projects.query.all()
-        return {'data': project_schema.dump(projects, many=True).data}
+        return {'data': project_schema.dump(projects, many=True).data}, 200
 
     def post(self):
         input_request = project_schema.load(request.json)
@@ -39,26 +37,32 @@ class ProjectsInitializer(Resource):
             db.add(project)
             project_id = db.query(Projects).filter(Projects.contract_id == contract_id).first()
 
-            return {'status': 'create_successfully', 'id': str(project_id)}
+            return {'status': 'create_successfully', 'id': str(project_id)}, 201
 
 
 # /projects/<id>
 class ProjectsResources(Resource):
     def get(self, id):
         project = Projects.query.filter_by(id=id).first()
+
         if not project:
-            abort(404)
-            return {"message": "No such project"}, 404
+            abort(404, "No such project")
 
         return {
             'name': project.name,
             'contract_id': str(project.contract_id),
             'status': project.name
-        }
+        }, 200
 
     # update contract_id
     def put(self, id):
-        data = project_schema.load(request.json, partial=('contract_id',))[DATA]
+        input_requset = project_schema.load(request.json)
+
+        data = input_requset[DATA]
+        errors = input_requset[ERRORS]
+
+        if errors:
+            abort(404, 'error')
 
         contract_id = data['contract_id']
         with session() as db:
@@ -107,17 +111,7 @@ class DataHandler(Resource):
                     field_7=data['field_7'],
                     field_8=data['field_8'],
                     field_9=data['field_9'],
-                    field_10=data['field_10'],
-                    field_11=data['field_11'],
-                    field_12=data['field_12'],
-                    field_13=data['field_13'],
-                    field_14=data['field_14'],
-                    field_15=data['field_15'],
-                    field_16=data['field_16'],
-                    field_17=data['field_17'],
-                    field_18=data['field_18'],
-                    field_19=data['field_19'],
-                    field_20=data['field_20']
+                    field_10=data['field_10']
                 )
                 db.add(project_data)
 
