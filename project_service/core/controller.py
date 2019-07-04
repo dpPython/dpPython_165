@@ -58,10 +58,10 @@ class ProjectsResources(Resource):
 
     # update contract_id
     def put(self, id):
-        input_requset = project_schema.load(request.json)
+        input_request = project_schema.load(request.json)
 
-        data = input_requset[DATA]
-        errors = input_requset[ERRORS]
+        data = input_request[DATA]
+        errors = input_request[ERRORS]
 
         if errors:
             abort(404, 'error')
@@ -164,7 +164,7 @@ class ProjectsCalc(Resource):
 
     def post(self, id):
         """
-        Method to retrieve  calculated data of the particular project
+        Method to retrieve calculated data of the particular project
         :param id: an id of the project
         """
 

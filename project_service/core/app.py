@@ -12,4 +12,4 @@ api.add_resource(ProjectsResources, '/projects/<id>')
 api.add_resource(DataHandler, '/projects/<id>/data')
 api.add_resource(StatusUpdater, '/projects/<id>/status')
 
-api.add_resource(ProjectsCalc, '/projects/<id>/calc')
+api.add_resource(ProjectsCalc, '/projects/<id>/calculation')
