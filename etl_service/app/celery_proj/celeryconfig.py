@@ -22,5 +22,5 @@ CELERY_ROUTES = {
     'send_status': {'queue': 'for_status', 'routing_key': 'for_status'},
     'send_chunks': {
         'queue': 'for_chunks_register', 'routing_key': 'for_chunks_register'
-    }
+        }
     }
