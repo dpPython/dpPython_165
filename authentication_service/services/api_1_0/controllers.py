@@ -13,9 +13,9 @@ class SessionSchemaPost(Schema):
 
 class UserSchema(Schema):
     id = fields.UUID()
-    username = fields.Srt()
+    username = fields.Str()
     email = fields.Str()
-    password_hash = fileds.Str()
+    password_hash = fields.Str()
     user_address = fields.Str()
     create_user_date = fields.DateTime()
 
@@ -36,13 +36,13 @@ class LoginController:
         if user_id != 'not_found':
             redis_client = current_app.extensions['redis']
             sid = uuid4()
-            session_details_redis = str(sid) + ',' + username + ',' + str(user_id) + ',' + str(datetime.now())
+            session_details_redis = username + ',' + str(user_id) + ',' + str(datetime.now())
             redis_client.set(str(sid), session_details_redis, ex=TTL)
             send_session_details = SessionDetails('success', sid)
-            result_send = schema_send.dumps(send_session_details)
+            result_send = schema_send.dump(send_session_details)
             return result_send
         send_session_details = SessionDetails('failed', None)
-        result_send = schema_send.dumps(send_session_details)
+        result_send = schema_send.dump(send_session_details)
         return result_send
 
 
