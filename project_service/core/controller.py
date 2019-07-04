@@ -162,17 +162,17 @@ class ProjectsCalc(Resource):
         Method to fetch data of the particular project for calculation
         :param id: an id of the project
         """
-        _project = Projects.query.filter_by(id=uuid.UUID(id)).first()
-        if not _project:
+        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        if not project:
             abort(404)
             return {"message": "There is no such project"}, 404
 
-        _id = str(_project.id)
-        _data = Data.query.filter_by(id=uuid.UUID(_id))
-        if not _data:
+        id = str(project.id)
+        data = Data.query.filter_by(id=uuid.UUID(id))
+        if not data:
             abort(400)
             return {"message": "No input data provided"}, 400
-        if not bool(_data):
+        if not bool(data):
             abort(400)
             return {"message": "Empty data"}, 400
 
@@ -182,8 +182,8 @@ class ProjectsCalc(Resource):
                 update({'status': new_status})
 
         try:
-            output_prj = project_schema.dump(_project).data
-            output_data = data_schema.dump(_data).data
+            output_prj = project_schema.dump(project).data
+            output_data = data_schema.dump(data).data
         except KeyError:
             abort(400)
             return {"message": "Something is wrong"}, 400
@@ -196,8 +196,8 @@ class ProjectsCalc(Resource):
         """
 
         # obtain certain project
-        _project = Projects.query.filter_by(id=uuid.UUID(id)).first()
-        if not _project:
+        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        if not project:
             abort(404)
             return {"message": "There is no such project"}, 404
 
