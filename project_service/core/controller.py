@@ -17,13 +17,18 @@ data_schema = DataSchema()
 class ProjectsInitializer(Resource):
     def get(self):
         projects = Projects.query.all()
+        if not projects:
+            return {'message': 'There are no projects'}, 200
 
         logger.info(f'/projects GET (all_projects_count): {len(projects)}')
 
-        return {'data': project_schema.dump(projects, many=True).data}
+        return {'data': project_schema.dump(projects, many=True).data}, 200
 
     def post(self):
         data = project_schema.load(request.json)[0]
+        if not data:
+            abort(400)
+            return {"message": "No input data provided"}, 400
 
         logger.info(f'/projects POST (data): {data}')
 
@@ -36,13 +41,16 @@ class ProjectsInitializer(Resource):
         with session() as db:
             db.add(new_project)
 
-        return {'status': 'ok'}
+        return {'status': 'ok'}, 201
 
 
 # /projects/<id>
 class ProjectsResources(Resource):
     def get(self, id):
         project = Projects.query.filter_by(id=id).first()
+        if not project:
+            abort(404)
+            return {"message": "No such project"}, 404
 
         return {
             'name': project.name,
@@ -53,6 +61,9 @@ class ProjectsResources(Resource):
     # update contract_id
     def put(self, id):
         data = project_schema.load(request.json, partial=('contract_id',))[0]
+        if not data:
+            abort(400)
+            return {"message": "No input data provided"}, 400
 
         logger.info(f'/projects/<id> PUT (contract_id) {data}')
 
@@ -71,13 +82,17 @@ class ProjectsResources(Resource):
             db.query(Projects).filter(Projects.id == id). \
                 delete()
 
-        return {'status': 'deleted successfully'}
+        return {'status': 'deleted successfully'}, 200
 
 
 # /projects/<id>/status
 class StatusUpdater(Resource):
     def put(self, id):
         data = project_schema.load(request.json, partial=('status',))[0]
+        if not data:
+            abort(400)
+            return {"message": "No input data provided"}, 400
+
         status = data['status']
 
         logger.info(f'/projects/<id>/status PUT (update_status) {status}')
@@ -86,13 +101,16 @@ class StatusUpdater(Resource):
             db.query(Projects).filter(Projects.id == id). \
                 update({'status': status})
 
-        return {'status': 'status_updated_successfully'}
+        return {'status': 'status_updated_successfully'}, 200
 
 
 # /projects/<id>/data/
 class DataHandler(Resource):
     def post(self, id):
         data = data_schema.load(request.json)[0]
+        if not data:
+            abort(400)
+            return {"message": "No input data provided"}, 400
 
         logger.info(f'/projects/<id>/data POST (calculation data) {data}')
 
@@ -123,7 +141,7 @@ class DataHandler(Resource):
                 )
                 db.add(project_data)
 
-        return {'status': 'write_all_data'}
+        return {'status': 'write_all_data'}, 201
 
     # delete all data owned by project by project_id
     def delete(self, id):
@@ -132,7 +150,7 @@ class DataHandler(Resource):
             db.query(Data).filter(Data.project_id == id).\
                 delete()
 
-        return {'status': 'deleted_successfully'}
+        return {'status': 'deleted_successfully'}, 200
 
 
 # /projects/<id>/calc
@@ -166,7 +184,7 @@ class ProjectsCalc(Resource):
         try:
             output_prj = project_schema.dump(_project).data
             output_data = data_schema.dump(_data).data
-        except:
+        except KeyError:
             abort(400)
             return {"message": "Something is wrong"}, 400
         return jsonify({"project": output_prj, "data": output_data}), 200
