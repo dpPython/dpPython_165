@@ -4,13 +4,14 @@ from flask import request, abort, jsonify
 from flask_restful import Resource
 
 from .models import Projects, Data
-from .utils.schemas import ProjectSchema, DataSchema
+from .utils.schemas import ProjectSchema, DataSchema, StatusSchema
 from .utils.session import session
 
 DATA = 0
 ERRORS = 1
 project_schema = ProjectSchema()
 data_schema = DataSchema()
+status_schema = StatusSchema()
 
 
 # /projects
@@ -82,10 +83,15 @@ class ProjectsResources(Resource):
 # /projects/<id>/status
 class StatusUpdater(Resource):
     def put(self, id):
-        data = project_schema.load(request.json, partial=('status',))[DATA]
+        request_data = status_schema.load(request.json)
+
+        data = request_data[DATA]
+        errors = request_data[ERRORS]
+
+        if errors:
+            abort(404, 'invalid status')
 
         status = data['status']
-
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
                 update({'status': status})
@@ -96,7 +102,13 @@ class StatusUpdater(Resource):
 # /projects/<id>/data/
 class DataHandler(Resource):
     def post(self, id):
-        data = data_schema.load(request.json)[DATA]
+        request_data = data_schema.load(request.json)
+
+        data = request_data[DATA]
+        errors = request_data[ERRORS]
+
+        if errors:
+            abort(404, 'Invalid data')
 
         with session() as db:
             for data in data['data']:

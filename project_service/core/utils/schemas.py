@@ -1,6 +1,10 @@
 from marshmallow import Schema, fields, pprint
 
 
+class StatusSchema(Schema):
+    status = fields.Str(required=True)
+
+
 class ProjectSchema(Schema):
     id = fields.Str()
     status = fields.Str()
@@ -19,19 +23,7 @@ class DataNestedSchema(Schema):
     field_8 = fields.Integer()
     field_9 = fields.Integer()
     field_10 = fields.String()
-    field_11 = fields.Bool()
-    field_12 = fields.Integer()
-    field_13 = fields.Float()
-    field_14 = fields.Integer()
-    field_15 = fields.Integer()
-    field_16 = fields.Integer()
-    field_17 = fields.Str()
-    field_18 = fields.Float()
-    field_19 = fields.Integer()
-    field_20 = fields.Integer()
 
 
 class DataSchema(Schema):
     data = fields.Nested(DataNestedSchema, many=True)
-
-
