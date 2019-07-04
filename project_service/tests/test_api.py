@@ -26,27 +26,46 @@ class TestMyAppCRUD(unittest.TestCase):
     data = {
         'status': 'create_schema',
         'name': 'eugene',
-        'contract_id': '18f441a0-d0b1-4b22-b16b-c1e718dab640'
+        'contract_id': '18f441a0-d0b1-4b22-b16b-c1e718dab64d'
     }
 
-    def test_posting_project(self):
-        # HTTP POST request to the application on certain path
-        prj = self.app.post('/projects', data=json.dumps(self.data), content_type='application/json')
-        self.assertEqual(prj.status_code, 201)
+    # def test_posting_project(self):
+    #     # HTTP POST request
+    #     prj = self.app.post('/projects', data=json.dumps(self.data), content_type='application/json')
+    #     self.assertEqual(prj.status_code, 201)
 
-    def test_posting_project_denial(self):
-        # HTTP POST request to the application on certain path
+    def test_posting_projects_denial(self):
+        # HTTP POST request with no data
         prj = self.app.post('/projects', data=None)
         self.assertEqual(prj.status_code, 400)
 
-    # def test_getting_certain_project(self):
+    # def test_getting_certain_project(self, _id='862d8628-29c6-48c0-9303-8bfec1c98d56'):
     #     # HTTP GET request to the application on certain path
-    #     prj = self.app.get('/projects')
+    #     prj = self.app.get('/projects/{}'.format(_id))
     #
+    #     # assert the status code
+    #     self.assertEqual(prj.status_code, 200)
+
+    def test_getting_certain_project_denial(self, _id='00000000-0000-0000-0000-000000000000'):
+        # HTTP GET request with incorrect id
+        prj = self.app.get('/projects/{}'.format(_id))
+        self.assertEqual(prj.status_code, 404)
+
+    # def test_putting_certain_project(self, _id='862d8628-29c6-48c0-9303-8bfec1c98d56'):
+    #     # HTTP PUT request to the application on certain path
+    #     prj = self.app.put('/projects/{}'.format(_id))
+    #
+    #     # assert the status code
+    #     self.assertEqual(prj.status_code, 200)
+
+    def test_putting_certain_project_denial(self, _id='00000000-0000-0000-0000-000000000000'):
+        # HTTP PUT request with incorrect id
+        prj = self.app.put('/projects/{}'.format(_id))
+        self.assertEqual(prj.status_code, 400)
+
     #     # assert the status code and type of response
     #     self.assertEqual(prj.status_code, 200)
     #     self.assertNotEqual(prj.status_code, 400)
-    #     self.assertEqual(prj.content_type, 'application/json')
     #
     #     # assert the response data
     #     self.assertEqual(prj.data, b'{"message": "There are no projects"}\n')
@@ -63,6 +82,3 @@ class TestMyAppCRUD(unittest.TestCase):
     # def test_404(self):
     #     rv = self.app.get('/other')
     #     self.assertEqual(rv.status, '404 NOT FOUND')
-
-
- #        self.assertEqual(result.data, "Hello World!!!")

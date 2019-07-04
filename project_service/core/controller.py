@@ -73,7 +73,7 @@ class ProjectsResources(Resource):
             db.query(Projects).filter(Projects.id == id). \
                 update({'contract_id': contract_id})
 
-        return {'status': 'updated'}
+        return {'status': 'updated'}, 200
 
     def delete(self, id):
         logger.info(f'/projects/<id>/delete DELETE (project_id) {id}')
