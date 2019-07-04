@@ -12,6 +12,7 @@ migrate = Migrate()
 def psgres_url():
     return 'postgresql://postgres:11111111@localhost:5432/users'
 
+
 def create_app():
     app = Flask(__name__)
     usr_api.init_app(app)
@@ -22,4 +23,6 @@ def create_app():
         migrate.init_app(app, db)
     return app
 
+
 bcrypt = Bcrypt(create_app())
+
