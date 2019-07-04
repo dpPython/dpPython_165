@@ -1,8 +1,9 @@
 from flask import request, abort
 from flask_restful import Resource
-from core.utils.schema import users_schema, user_schema
-from core.models import Users
-from core.utils.session import session
+
+from .models import Users
+from .utils.schema import users_schema, user_schema
+from .utils.session import session
 
 
 class UsersPostGet(Resource):
@@ -26,11 +27,6 @@ class UsersPutGet(Resource):
         return {'User': user_schema.dump(user).data}
 
     def put(self, username):
-        # auth = requests.get('auth/<{}>'.format(username))   # проверка авторизован польз. или нет
-        # if auth.status_code == 500:
-        # if auth['status'] == 'failed':
-        #   return abort(500, 'User is not authorized')
-
         user = Users.query.filter_by(username=username).first_or_404()
         data = request.get_json() or {}
         from_model_atribure(data, user)
@@ -40,7 +36,7 @@ class UsersPutGet(Resource):
 
 def from_model_atribure(data, user, result=None):
     if result is not None and result.errors != {}:
-        return abort(401, 'Incorrect data')
+        return abort(400, 'Incorrect data')
     for field in ['username', 'email', 'user_address']:
         if field in data:
             setattr(user, field, data[field])

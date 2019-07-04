@@ -2,23 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9614bdce-c78c-4d2f-a17f-cc41dc18e836" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/authentication_service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/authentication_service/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calculation_service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts_service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_service/core/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_service/core/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/users_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authentication_service" beforeDir="false" afterPath="$PROJECT_DIR$/authentication_service" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/etl_service/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/etl_service/app/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/etl_service/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/etl_service/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/etl_service/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/etl_service/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_service/core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/project_service/core/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_service/core/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/project_service/core/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_service/core/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/project_service/core/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_service/core/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/project_service/core/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_service/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/project_service/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users_service/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/users_service/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users_service/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users_service/core/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/users_service/core/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users_service/core/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/users_service/core/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users_service/core/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users_service/core/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users_service/core/utils/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/users_service/core/utils/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users_service/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/users_service/manage.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,46 +18,79 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+        <entry file="file://$PROJECT_DIR$/users_service/core/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="514">
-              <caret line="66" column="12" lean-forward="true" selection-start-line="66" selection-start-column="12" selection-end-line="66" selection-end-column="12" />
+            <state relative-caret-position="425">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/users_service/Dockerfile">
+        <entry file="file://$PROJECT_DIR$/users_service/core/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="153">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/users_service/core/api.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/users_service/core/utils/session.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/users_service/core/utils/schema.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/users_service/core/utils/response.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/calculation_service/requirements.txt">
+        <entry file="file://$PROJECT_DIR$/users_service/core/utils/errors.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/etl_service/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" lean-forward="true" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project_service/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="21" selection-end-column="16" />
+            <state relative-caret-position="255">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -76,30 +98,34 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/users_service/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="20" lean-forward="true" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+            <state relative-caret-position="544">
+              <caret line="32" selection-start-line="32" selection-end-line="32" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/authentication_service/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/users_service/core/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/contracts_service/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/calculation_service/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/authentication_service/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/users_service/core/controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="511">
+              <caret line="44" selection-start-line="44" selection-end-line="44" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -135,6 +161,15 @@
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/users_service/requirements.txt" />
         <option value="$PROJECT_DIR$/calculation_service/requirements.txt" />
+        <option value="$PROJECT_DIR$/users_service/manage.py" />
+        <option value="$PROJECT_DIR$/users_service/core/models.py" />
+        <option value="$PROJECT_DIR$/users_service/core/controller.py" />
+        <option value="$PROJECT_DIR$/users_service/core/config.py" />
+        <option value="$PROJECT_DIR$/users_service/core/api.py" />
+        <option value="$PROJECT_DIR$/users_service/core/utils/session.py" />
+        <option value="$PROJECT_DIR$/users_service/core/utils/schema.py" />
+        <option value="$PROJECT_DIR$/users_service/core/utils/response.py" />
+        <option value="$PROJECT_DIR$/users_service/core/utils/errors.py" />
       </list>
     </option>
   </component>
@@ -150,38 +185,52 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="dp_Python165" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dp_Python165" type="462c0819:PsiDirectoryNode" />
+              <item name="dpPython_165" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dpPython_165" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="dp_Python165" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dp_Python165" type="462c0819:PsiDirectoryNode" />
-              <item name="authentication_service" type="462c0819:PsiDirectoryNode" />
+              <item name="dpPython_165" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dpPython_165" type="462c0819:PsiDirectoryNode" />
+              <item name="users_service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="dp_Python165" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dp_Python165" type="462c0819:PsiDirectoryNode" />
-              <item name="calculation_service" type="462c0819:PsiDirectoryNode" />
+              <item name="dpPython_165" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dpPython_165" type="462c0819:PsiDirectoryNode" />
+              <item name="users_service" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dpPython_165" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dpPython_165" type="462c0819:PsiDirectoryNode" />
+              <item name="users_service" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/users_service/core" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\NT Алекс\Documents\GitHub\rpg_game\dpPython_165\users_service" />
+      <recent name="C:\Users\NT Алекс\Documents\GitHub\rpg_game\dpPython_165\users_service\core" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\NT Алекс\Documents\GitHub\rpg_game\dpPython_165\users_service\core" />
       <recent name="C:\Users\Вадя\Desktop\dp_Python165\authentication_service" />
       <recent name="C:\Users\Вадя\Desktop\dp_Python165\calculation_service" />
       <recent name="C:\Users\Вадя\Desktop\dp_Python165\contracts_service" />
@@ -212,17 +261,18 @@
       <updated>1561554458248</updated>
       <workItem from="1561554460757" duration="1434000" />
       <workItem from="1561557128180" duration="9708000" />
+      <workItem from="1562219366638" duration="279000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11142000" />
+    <option name="totallyTimeSpent" value="11421000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25302014" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25586355" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -235,7 +285,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" visible="true" weight="0.32827735" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -310,13 +360,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/env_file">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/env_file" />
     <entry file="file://$PROJECT_DIR$/project_service/manage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -417,45 +461,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/users_service/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/contracts_service/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/calculation_service/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication_service/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/authentication_service/Dockerfile" />
+    <entry file="file://$PROJECT_DIR$/authentication_service/requirements.txt" />
     <entry file="file://$PROJECT_DIR$/docker-compose.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="66" column="12" lean-forward="true" selection-start-line="66" selection-start-column="12" selection-end-line="66" selection-end-column="12" />
+        <state relative-caret-position="1122">
+          <caret line="66" column="12" selection-start-line="66" selection-start-column="12" selection-end-line="66" selection-end-column="12" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/users_service/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="20" lean-forward="true" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication_service/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/users_service/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etl_service/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
@@ -466,17 +491,117 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/etl_service/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" lean-forward="true" selection-end-line="4" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/contracts_service/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/calculation_service/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/calculation_service/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" selection-start-line="32" selection-end-line="32" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/utils/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/utils/schema.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/utils/response.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users_service/core/utils/errors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
