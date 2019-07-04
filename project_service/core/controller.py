@@ -2,12 +2,15 @@ import uuid
 
 from flask import request, abort, jsonify
 from flask_restful import Resource
+from marshmallow import ValidationError
 
+from .config import db
 from .models import Projects, Data
 from .utils.schemas import ProjectSchema, DataSchema
 from .utils.session import session
 
 DATA = 0
+ERRORS = 1
 project_schema = ProjectSchema()
 data_schema = DataSchema()
 
@@ -19,7 +22,13 @@ class ProjectsInitializer(Resource):
         return {'data': project_schema.dump(projects, many=True).data}
 
     def post(self):
-        data = project_schema.load(request.json)[DATA]
+        input_request = project_schema.load(request.json)
+
+        data = input_request[DATA]
+        errors = input_request[ERRORS]
+
+        if errors:
+            abort(404, 'not enough data')
 
         project_name = data['name']
         contract_id = data['contract_id']
@@ -28,7 +37,7 @@ class ProjectsInitializer(Resource):
         with session() as db:
             db.add(project)
 
-        return {'id': project.id}
+        return {'status': 'create_successfully'}
 
 
 # /projects/<id>

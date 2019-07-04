@@ -2,9 +2,10 @@ from marshmallow import Schema, fields, pprint
 
 
 class ProjectSchema(Schema):
+    id = fields.Str()
     status = fields.Str()
-    name = fields.Str()
-    contract_id = fields.UUID()
+    name = fields.Str(required=True)
+    contract_id = fields.UUID(required=True)
 
 
 class DataNestedSchema(Schema):
