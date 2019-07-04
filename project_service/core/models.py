@@ -9,7 +9,7 @@ class Projects(db.Model):
     name = db.Column(db.String(), unique=False, nullable=True)
     contract_id = db.Column(UUID(as_uuid=True), unique=True, nullable=False)
     status = db.Column(db.String(), unique=False, nullable=False)
-    rooms_data = db.relationship('Data')
+    data = db.relationship('Data')
 
 
 class Data(db.Model):

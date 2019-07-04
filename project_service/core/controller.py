@@ -35,6 +35,9 @@ class ProjectsInitializer(Resource):
 class ProjectsResources(Resource):
     def get(self, id):
         project = Projects.query.filter_by(id=id).first()
+        if not project:
+            abort(404)
+            return {"message": "No such project"}, 404
 
         return {
             'name': project.name,
@@ -51,27 +54,28 @@ class ProjectsResources(Resource):
             db.query(Projects).filter(Projects.id == id). \
                 update({'contract_id': contract_id})
 
-        return {'status': 'updated'}
+        return {'status': 'updated'}, 200
 
     def delete(self, id):
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
                 delete()
 
-        return {'status': 'deleted successfully'}
+        return {'status': 'deleted successfully'}, 200
 
 
 # /projects/<id>/status
 class StatusUpdater(Resource):
     def put(self, id):
         data = project_schema.load(request.json, partial=('status',))[DATA]
+
         status = data['status']
 
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
                 update({'status': status})
 
-        return {'status': 'status_updated_successfully'}
+        return {'status': 'status_updated_successfully'}, 200
 
 
 # /projects/<id>/data/
@@ -106,7 +110,7 @@ class DataHandler(Resource):
                 )
                 db.add(project_data)
 
-        return {'status': 'write_data'}
+        return {'status': 'write_all_data'}, 201
 
     # delete all data owned by project by project_id
     def delete(self, id):
@@ -114,7 +118,7 @@ class DataHandler(Resource):
             db.query(Data).filter(Data.project_id == id). \
                 delete()
 
-        return {'status': 'deleted_successfully'}
+        return {'status': 'deleted_successfully'}, 200
 
 
 # /projects/<id>/calc
@@ -126,17 +130,17 @@ class ProjectsCalc(Resource):
         Method to fetch data of the particular project for calculation
         :param id: an id of the project
         """
-        _project = Projects.query.filter_by(id=uuid.UUID(id)).first()
-        if not _project:
+        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        if not project:
             abort(404)
             return {"message": "There is no such project"}, 404
 
-        _id = str(_project.id)
-        _data = Data.query.filter_by(id=uuid.UUID(_id))
-        if not _data:
+        id = str(project.id)
+        data = Data.query.filter_by(id=uuid.UUID(id))
+        if not data:
             abort(400)
             return {"message": "No input data provided"}, 400
-        if not bool(_data):
+        if not bool(data):
             abort(400)
             return {"message": "Empty data"}, 400
 
@@ -146,9 +150,9 @@ class ProjectsCalc(Resource):
                 update({'status': new_status})
 
         try:
-            output_prj = project_schema.dump(_project).data
-            output_data = data_schema.dump(_data).data
-        except:
+            output_prj = project_schema.dump(project).data
+            output_data = data_schema.dump(data).data
+        except KeyError:
             abort(400)
             return {"message": "Something is wrong"}, 400
         return jsonify({"project": output_prj, "data": output_data}), 200
@@ -160,8 +164,8 @@ class ProjectsCalc(Resource):
         """
 
         # obtain certain project
-        _project = Projects.query.filter_by(id=uuid.UUID(id)).first()
-        if not _project:
+        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        if not project:
             abort(404)
             return {"message": "There is no such project"}, 404
 

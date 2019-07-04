@@ -26,6 +26,7 @@ def postgres_uri():
             port=DBPORT,
             db=DBNAME)
 
+
 def create_app():
     app = Flask(__name__)
     api.init_app(app)
