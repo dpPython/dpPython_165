@@ -27,7 +27,7 @@ class FlaskTestApi(unittest.TestCase):
         user = self.app.get('/users/api/don')
         self.assertEqual(user.status_code, 404)
 
-    '''
+
     def test_post_user(self):
         post_data = {
             'username': 'nina',
@@ -35,10 +35,10 @@ class FlaskTestApi(unittest.TestCase):
             'email': 'nina@example.com',
             'user_address': 'Ninskaya,27'
         }
-        user = self.app.post('/users/api/users/', data=json.dumps(post_data))
-        self.assertEqual(user.status_code, 201)
+        user = self.app.post('/users/api/users', data=json.dumps(post_data), content_type='application/json')
+        self.assertEqual(user.status_code, 200)
         self.assertEqual(user.content_type, 'application/json')
-    '''
+
 
     def test_post_none_user(self):
         user = self.app.post('/users/api/users/', data=None)
