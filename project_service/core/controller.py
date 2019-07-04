@@ -3,72 +3,70 @@ import uuid
 from flask import request, abort, jsonify
 from flask_restful import Resource
 
-from .models import Projects, Data, db
-from .utils.schemas import ProjectSchema, DataSchema
+from .models import Projects, Data
+from .utils.schemas import ProjectSchema, DataSchema, StatusSchema, DataNestedSchema
 from .utils.session import session
-from .utils.logger_creator import LoggerCreator
 
-logger = LoggerCreator('controller', 'controller.log', '%(asctime)s - %(levelname)s - %(message)s').logger
+DATA = 0
+ERRORS = 1
+
+nested_schema = DataNestedSchema()
 project_schema = ProjectSchema()
 data_schema = DataSchema()
+status_schema = StatusSchema()
 
 
 # /projects
 class ProjectsInitializer(Resource):
     def get(self):
         projects = Projects.query.all()
-        if not projects:
-            return {'message': 'There are no projects'}, 200
-
-        logger.info(f'/projects GET (all_projects_count): {len(projects)}')
-
         return {'data': project_schema.dump(projects, many=True).data}, 200
 
     def post(self):
-        data = project_schema.load(request.json)[0]
-        if not data:
-            abort(400)
-            return {"message": "No input data provided"}, 400
+        input_request = project_schema.load(request.json)
 
-        logger.info(f'/projects POST (data): {data}')
+        data = input_request[DATA]
+        errors = input_request[ERRORS]
+
+        if errors:
+            abort(404, 'not enough data')
 
         project_name = data['name']
         contract_id = data['contract_id']
-        new_project = Projects(name=project_name, contract_id=contract_id, status='default')
-
-        logger.debug(f'/projects POST (write_data) {new_project}')
+        project = Projects(name=project_name, contract_id=contract_id, status='default')
 
         with session() as db:
-            db.add(new_project)
+            db.add(project)
+            project_id = db.query(Projects).filter(Projects.contract_id == contract_id).first()
 
-        return {'status': 'ok'}, 201
+            return {'status': 'create_successfully', 'id': str(project_id)}, 201
 
 
 # /projects/<id>
 class ProjectsResources(Resource):
     def get(self, id):
         project = Projects.query.filter_by(id=id).first()
+
         if not project:
-            abort(404)
-            return {"message": "No such project"}, 404
+            abort(404, "No such project")
 
         return {
-            'name': project.name,
-            'contract_id': str(project.contract_id),
-            'status': project.name
-        }
+                   'name': project.name,
+                   'contract_id': str(project.contract_id),
+                   'status': project.name
+               }, 200
 
     # update contract_id
     def put(self, id):
-        data = project_schema.load(request.json, partial=('contract_id',))[0]
-        if not data:
-            abort(400)
-            return {"message": "No input data provided"}, 400
+        input_requset = project_schema.load(request.json)
 
-        logger.info(f'/projects/<id> PUT (contract_id) {data}')
+        data = input_requset[DATA]
+        errors = input_requset[ERRORS]
+
+        if errors:
+            abort(404, 'error')
 
         contract_id = data['contract_id']
-
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
                 update({'contract_id': contract_id})
@@ -76,8 +74,6 @@ class ProjectsResources(Resource):
         return {'status': 'updated'}, 200
 
     def delete(self, id):
-        logger.info(f'/projects/<id>/delete DELETE (project_id) {id}')
-
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
                 delete()
@@ -88,15 +84,15 @@ class ProjectsResources(Resource):
 # /projects/<id>/status
 class StatusUpdater(Resource):
     def put(self, id):
-        data = project_schema.load(request.json, partial=('status',))[0]
-        if not data:
-            abort(400)
-            return {"message": "No input data provided"}, 400
+        request_data = status_schema.load(request.json)
+
+        data = request_data[DATA]
+        errors = request_data[ERRORS]
+
+        if errors:
+            abort(404, 'invalid status')
 
         status = data['status']
-
-        logger.info(f'/projects/<id>/status PUT (update_status) {status}')
-
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
                 update({'status': status})
@@ -107,12 +103,13 @@ class StatusUpdater(Resource):
 # /projects/<id>/data/
 class DataHandler(Resource):
     def post(self, id):
-        data = data_schema.load(request.json)[0]
-        if not data:
-            abort(400)
-            return {"message": "No input data provided"}, 400
+        request_data = data_schema.load(request.json)
 
-        logger.info(f'/projects/<id>/data POST (calculation data) {data}')
+        data = request_data[DATA]
+        errors = request_data[ERRORS]
+
+        if errors:
+            abort(404, 'Invalid data')
 
         with session() as db:
             for data in data['data']:
@@ -127,17 +124,7 @@ class DataHandler(Resource):
                     field_7=data['field_7'],
                     field_8=data['field_8'],
                     field_9=data['field_9'],
-                    field_10=data['field_10'],
-                    field_11=data['field_11'],
-                    field_12=data['field_12'],
-                    field_13=data['field_13'],
-                    field_14=data['field_14'],
-                    field_15=data['field_15'],
-                    field_16=data['field_16'],
-                    field_17=data['field_17'],
-                    field_18=data['field_18'],
-                    field_19=data['field_19'],
-                    field_20=data['field_20']
+                    field_10=data['field_10']
                 )
                 db.add(project_data)
 
@@ -145,9 +132,8 @@ class DataHandler(Resource):
 
     # delete all data owned by project by project_id
     def delete(self, id):
-
         with session() as db:
-            db.query(Data).filter(Data.project_id == id).\
+            db.query(Data).filter(Data.project_id == id). \
                 delete()
 
         return {'status': 'deleted_successfully'}, 200
@@ -155,39 +141,26 @@ class DataHandler(Resource):
 
 # /projects/<id>/calc
 class ProjectsCalc(Resource):
-
     def get(self, id):
 
         """
         Method to fetch data of the particular project for calculation
         :param id: an id of the project
         """
-        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
+        project = Projects.query.filter_by(id=id).first()
         if not project:
-            abort(404)
-            return {"message": "There is no such project"}, 404
-
-        id = str(project.id)
-        data = Data.query.filter_by(id=uuid.UUID(id))
-        if not data:
-            abort(400)
-            return {"message": "No input data provided"}, 400
-        if not bool(data):
-            abort(400)
-            return {"message": "Empty data"}, 400
+            abort(404, "No such project")
 
         new_status = "calculation"
         with session() as db:
-            db.query(Projects).filter(Projects.id == id).\
+            db.query(Projects).filter(Projects.id == id). \
                 update({'status': new_status})
 
-        try:
-            output_prj = project_schema.dump(project).data
-            output_data = data_schema.dump(data).data
-        except KeyError:
-            abort(400)
-            return {"message": "Something is wrong"}, 400
-        return jsonify({"project": output_prj, "data": output_data}), 200
+        data = Data.query.filter_by(project_id=id).all()
+        if not data:
+            abort(400, "No input data provided")
+
+        return {'project': project_schema.dump(project).data, 'data': nested_schema.dump(data, many=True).data}, 200
 
     def post(self, id):
         """
@@ -198,8 +171,7 @@ class ProjectsCalc(Resource):
         # obtain certain project
         project = Projects.query.filter_by(id=uuid.UUID(id)).first()
         if not project:
-            abort(404)
-            return {"message": "There is no such project"}, 404
+            abort(404, "No such project")
 
         # deserialize input json
         entry_data = request.get_json()
@@ -207,29 +179,3 @@ class ProjectsCalc(Resource):
             return {"message": "No input data provided"}, 400
         result = entry_data["result"]
         return {"result": result}, 200
-
-
-# /api/calc/status/<id>
-class ProjectsCalcResult(Resource):
-    def put(self, id):
-        """
-        Method to update project status data which are in calculation progress
-        :param id: an id of the project
-        """
-
-        # deserialize input json
-        json_data = request.get_json()
-        if not json_data:
-            return {"message": "No input data provided"}, 400
-
-        new_status = json_data["status"]
-
-        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
-        if not project:
-            return {"message": "Can't update - no such project"}, 404
-
-        with session() as db:
-            db.query(Projects).filter(Projects.id == id). \
-                update({'status': new_status})
-
-        return {"message": "Status succefully updated for {}".format(new_status)}, 200
