@@ -10,7 +10,7 @@ class AccessToProjects:
         return response.json(), response.status_code
 
     def put(self, id, status):
-        requests.put('https://localhost:<port>/projects/{}/calc'.format(id), headers=status)
+        requests.put('https://localhost:<port>/projects/{}/calc'.format(id), json={"status":status})
 
 
 class AccessToContracts:

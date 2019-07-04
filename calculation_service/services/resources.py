@@ -1,17 +1,17 @@
 from flask_restful import Resource
-from flask import jsonify
+from flask import jsonify, request
 from .models import Calculation
-import services.tasks as tasks
+from .mission import calculate_by_rules
 from .config import db
 
 
 class Calculate(Resource):
-    def post(self, project_id):
-        tasks.calculate_by_rules.delay(project_id)
+    def post(self):
+        calculate_by_rules.delay(request.json["project_id"])
 
 
 class Results(Resource):
-    def get(self, id):
-        project_id = id.get("project_id")
+    def get(self):
+        project_id = request.json["project_id"]
         calculation = db.session.query(Calculation).filter_by(project_id=project_id).first()
-        return jsonify({"result":calculation})
+        return jsonify({"result": calculation})

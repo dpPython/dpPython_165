@@ -5,6 +5,6 @@ from .resources import Calculate, Results
 app = create_app()
 
 api.add_resource(Calculate, '/')
-api.add_resource(Results, 'results/<id>')
+api.add_resource(Results, '/results/')
 app.register_blueprint(api_blueprint, url_prefix="/calculation")
 
