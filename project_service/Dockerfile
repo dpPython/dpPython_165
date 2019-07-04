@@ -13,11 +13,10 @@ FROM base
 COPY --from=builder /install /usr/local
 COPY . /app
 RUN apk --no-cache add libpq
+RUN /bin/sh -c "apk add --no-cache bash"
 WORKDIR /app
 
 ENV DOCKER=1
 
-CMD ["python", "manage.py", "db", "init"]
-CMD ["python", "manage.py", "db", "migrate"]
-CMD ["python", "manage.py", "db", "upgrade"]
-CMD ["python", "manage.py", "runserver" ]
+RUN chmod u+x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]

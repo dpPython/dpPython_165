@@ -3,12 +3,11 @@ import uuid
 from flask import request, abort, jsonify
 from flask_restful import Resource
 
-from .models import Projects, Data, db
+from .models import Projects, Data
 from .utils.schemas import ProjectSchema, DataSchema
 from .utils.session import session
-from .utils.logger_creator import LoggerCreator
 
-logger = LoggerCreator('controller', 'controller.log', '%(asctime)s - %(levelname)s - %(message)s').logger
+DATA = 0
 project_schema = ProjectSchema()
 data_schema = DataSchema()
 
@@ -17,26 +16,19 @@ data_schema = DataSchema()
 class ProjectsInitializer(Resource):
     def get(self):
         projects = Projects.query.all()
-
-        logger.info(f'/projects GET (all_projects_count): {len(projects)}')
-
         return {'data': project_schema.dump(projects, many=True).data}
 
     def post(self):
-        data = project_schema.load(request.json)[0]
-
-        logger.info(f'/projects POST (data): {data}')
+        data = project_schema.load(request.json)[DATA]
 
         project_name = data['name']
         contract_id = data['contract_id']
-        new_project = Projects(name=project_name, contract_id=contract_id, status='default')
-
-        logger.debug(f'/projects POST (write_data) {new_project}')
+        project = Projects(name=project_name, contract_id=contract_id, status='default')
 
         with session() as db:
-            db.add(new_project)
+            db.add(project)
 
-        return {'status': 'ok'}
+        return {'id': project.id}
 
 
 # /projects/<id>
@@ -52,12 +44,9 @@ class ProjectsResources(Resource):
 
     # update contract_id
     def put(self, id):
-        data = project_schema.load(request.json, partial=('contract_id',))[0]
-
-        logger.info(f'/projects/<id> PUT (contract_id) {data}')
+        data = project_schema.load(request.json, partial=('contract_id',))[DATA]
 
         contract_id = data['contract_id']
-
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
                 update({'contract_id': contract_id})
@@ -65,8 +54,6 @@ class ProjectsResources(Resource):
         return {'status': 'updated'}
 
     def delete(self, id):
-        logger.info(f'/projects/<id>/delete DELETE (project_id) {id}')
-
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
                 delete()
@@ -77,10 +64,8 @@ class ProjectsResources(Resource):
 # /projects/<id>/status
 class StatusUpdater(Resource):
     def put(self, id):
-        data = project_schema.load(request.json, partial=('status',))[0]
+        data = project_schema.load(request.json, partial=('status',))[DATA]
         status = data['status']
-
-        logger.info(f'/projects/<id>/status PUT (update_status) {status}')
 
         with session() as db:
             db.query(Projects).filter(Projects.id == id). \
@@ -92,9 +77,7 @@ class StatusUpdater(Resource):
 # /projects/<id>/data/
 class DataHandler(Resource):
     def post(self, id):
-        data = data_schema.load(request.json)[0]
-
-        logger.info(f'/projects/<id>/data POST (calculation data) {data}')
+        data = data_schema.load(request.json)[DATA]
 
         with session() as db:
             for data in data['data']:
@@ -123,13 +106,12 @@ class DataHandler(Resource):
                 )
                 db.add(project_data)
 
-        return {'status': 'write_all_data'}
+        return {'status': 'write_data'}
 
     # delete all data owned by project by project_id
     def delete(self, id):
-
         with session() as db:
-            db.query(Data).filter(Data.project_id == id).\
+            db.query(Data).filter(Data.project_id == id). \
                 delete()
 
         return {'status': 'deleted_successfully'}
@@ -160,7 +142,7 @@ class ProjectsCalc(Resource):
 
         new_status = "calculation"
         with session() as db:
-            db.query(Projects).filter(Projects.id == id).\
+            db.query(Projects).filter(Projects.id == id). \
                 update({'status': new_status})
 
         try:
@@ -189,29 +171,3 @@ class ProjectsCalc(Resource):
             return {"message": "No input data provided"}, 400
         result = entry_data["result"]
         return {"result": result}, 200
-
-
-# /api/calc/status/<id>
-class ProjectsCalcResult(Resource):
-    def put(self, id):
-        """
-        Method to update project status data which are in calculation progress
-        :param id: an id of the project
-        """
-
-        # deserialize input json
-        json_data = request.get_json()
-        if not json_data:
-            return {"message": "No input data provided"}, 400
-
-        new_status = json_data["status"]
-
-        project = Projects.query.filter_by(id=uuid.UUID(id)).first()
-        if not project:
-            return {"message": "Can't update - no such project"}, 404
-
-        with session() as db:
-            db.query(Projects).filter(Projects.id == id). \
-                update({'status': new_status})
-
-        return {"message": "Status succefully updated for {}".format(new_status)}, 200

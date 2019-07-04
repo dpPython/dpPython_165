@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 
-from .api import api_blueprint, api
+from .api import api
 
 
 DBUSER = 'postgres'
@@ -17,29 +17,14 @@ migrate = Migrate()
 
 
 def postgres_uri():
-    # if os.getenv("DOCKER"):
-        # return 'postgresql://postgres@db_projects_service:5432/postgres'
-    return 'postgresql://eugene:1401@localhost/projects'
-    # return 'postgresql://{user}:{passwd}@{host}:{port}/{db}'.format(
-    #         user=DBUSER,
-    #         passwd=DBPASS,
-    #         host=DBHOST,
-    #         port=DBPORT,
-    #         db=DBNAME)
-
-
-class BaseConfig(object):
-    DEBUG = False
-    SECRET_KEY = '\xbf\xb0\x11\xb1\xcd\xf9\xba\x8bp\x0c...'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://eugene:1401@localhost/projects'
-
-
-class TestConfig(BaseConfig):
-    DEBUG = True
-    TESTING = True
-    WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://eugene:1401@localhost/projects'
-
+    if os.getenv("DOCKER"):
+        return 'postgresql://postgres@db_projects_service:5432/postgres'
+    return 'postgresql://{user}:{passwd}@{host}:{port}/{db}'.format(
+            user=DBUSER,
+            passwd=DBPASS,
+            host=DBHOST,
+            port=DBPORT,
+            db=DBNAME)
 
 def create_app():
     app = Flask(__name__)
