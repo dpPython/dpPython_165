@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9614bdce-c78c-4d2f-a17f-cc41dc18e836" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/calculation_service/services/data_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calculation_service/services/tasks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculation_service/services/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculation_service/services/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculation_service/services/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculation_service/services/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculation_service/services/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculation_service/services/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculation_service/services/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculation_service/services/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculation_service/services/register_resource.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculation_service/services/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculation_service/services/resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculation_service/services/resources.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,12 +13,8 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/calculation_service/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/calculation_service/services/__init__.py">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -39,6 +25,15 @@
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/calculation_service/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -66,15 +61,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/calculation_service/services/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/calculation_service/services/api.py">
           <provider selected="true" editor-type-id="text-editor">
             <state>
@@ -142,6 +128,7 @@
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/users_service/requirements.txt" />
         <option value="$PROJECT_DIR$/calculation_service/requirements.txt" />
+        <option value="$PROJECT_DIR$/calculation_service/services/__init__.py" />
       </list>
     </option>
   </component>
@@ -223,6 +210,28 @@
       <workItem from="1561554460757" duration="1434000" />
       <workItem from="1561557128180" duration="9708000" />
     </task>
+    <task id="LOCAL-00001" summary="changes in calculation service">
+      <created>1562242536820</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1562242536820</updated>
+    </task>
+    <task id="LOCAL-00002" summary="changes in calculation service">
+      <created>1562242662550</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1562242662550</updated>
+    </task>
+    <task id="LOCAL-00003" summary="done calculation service">
+      <created>1562246145607</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1562246145607</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -231,7 +240,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="32" width="1920" height="999" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25264272" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25264272" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -245,7 +254,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5005285" side_tool="true" weight="0.32941177" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49947146" visible="true" weight="0.32941177" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49947146" visible="true" weight="0.12588236" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -256,6 +265,11 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="changes in calculation service" />
+    <MESSAGE value="done calculation service" />
+    <option name="LAST_COMMIT_MESSAGE" value="done calculation service" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/project_service/core/utils/config.py" />
@@ -431,32 +445,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/users_service/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/contracts_service/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/calculation_service/Dockerfile">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/calculation_service/requirements.txt">
+    <entry file="file://$PROJECT_DIR$/calculation_service/services/register_resource.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/calculation_service/services/resources.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state>
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/calculation_service/services/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/calculation_service/services/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/calculation_service/services/app.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -477,24 +491,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/calculation_service/services/register_resource.py">
+    <entry file="file://$PROJECT_DIR$/contracts_service/Dockerfile">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/calculation_service/services/resources.py">
+    <entry file="file://$PROJECT_DIR$/users_service/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="459">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/calculation_service/services/api.py">
+    <entry file="file://$PROJECT_DIR$/calculation_service/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="108">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
