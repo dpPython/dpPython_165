@@ -1,0 +1,6 @@
+Flask-RESTful==0.3.7
+Flask-Script==2.0.6
+Flask==1.0.3
+redis==3.2.1
+requests==2.22.0
+
