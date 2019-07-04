@@ -1,25 +1,17 @@
-from flask import jsonify
 from flask_restful import Resource
+from flask import jsonify
 from .models import Calculation
+import services.tasks as tasks
+from .config import db
 
 
 class Calculate(Resource):
-    def post(self):
-        # input correct url to get an info about contract
-        contract = self.get("contract_id")
-        project = contract.get("project_id")
-        rules = contract.get("rules")
-        data = self
-        cost = data.get("price").get("currency_value")
-        result = 0
-        for key in data:
-            if key in rules:
-                result += (data.get(key) * rules.get(key) * cost)
+    def post(self, project_id):
+        tasks.calculate_by_rules.delay(project_id)
 
-        currency = data.get('price').get('currency')
-        result = '{:.3f} '.format(result) + currency
-        request.put('/status', 'completed')
-        return result
 
-    def get(self):
-        return Calculation.result
+class Results(Resource):
+    def get(self, id):
+        project_id = id.get("project_id")
+        calculation = db.session.query(Calculation).filter_by(project_id=project_id).first()
+        return jsonify({"result":calculation})

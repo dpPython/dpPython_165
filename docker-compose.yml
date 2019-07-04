@@ -1,15 +1,6 @@
 version: '3.3'
 services:
 
-  authentication_service:
-    build: ./authentication_service
-    container_name: authentication_service
-    restart: always
-    ports:
-      - "5000:6000"
-    depends_on:
-      - users_service
-
   calculation_service:
     build: ./calculation_service
     container_name: calculation_service
@@ -22,12 +13,11 @@ services:
 
   contracts_service:
     build: ./contracts_service
-    container_name: calculation_service
+    container_name: contracts_service
     restart: always
     ports:
      - "5000:7000"
-    depends_on:
-      - authentication_service
+    
 
   etl_service:
     build: ./etl_service
@@ -36,13 +26,14 @@ services:
     depends_on:
       - projects_service
     ports:
-      - "5050:5050"
+      - "5000:5050"
 
   projects_service:
+
     build: ./project_service
+    container_name: projects_service
     depends_on:
       - db_projects_service
-      - authentication_service
     networks:
       - projects_network
     restart:
@@ -52,7 +43,7 @@ services:
 
   users_service:
     build: ./users_service
-    container_name: calculation_service
+    container_name: users_service
     restart: always
     ports:
      - "5000:7050"
@@ -66,9 +57,6 @@ services:
     restart:
       always
 
-
-
 networks:
-  projects_network:
-  etl_network:
-  auth_network:
+    projects_network:
+    etl_network:
