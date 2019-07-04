@@ -25,16 +25,11 @@ class AddUpdateDelete():
 
 
 class Contract(db.Model, AddUpdateDelete):
-    # id = db.Column(db.Integer, primary_key=True)
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-
     contract_name = db.Column(db.String(250), unique=True, nullable=False)
     information = db.Column(db.String(250))
     creation_date = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
-
-    # rule_id = db.Column(db.Integer, db.ForeignKey('rule.id'), nullable=False)
     rule_id = db.Column(UUID(as_uuid=True), db.ForeignKey('rule.id'), nullable=False)
-
     rule = db.relationship('Rule', backref=db.backref('contracts', lazy='dynamic' , order_by='Contract.contract_name'))
 
     def __init__(self, contract_name, information, rule):
@@ -44,9 +39,7 @@ class Contract(db.Model, AddUpdateDelete):
 
 
 class Rule(db.Model, AddUpdateDelete):
-    # id = db.Column(db.Integer, primary_key=True)
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-
     name = db.Column(db.String(150), unique=True, nullable=False)
     creation_date = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
     f_operand = db.Column(db.String(250), nullable=False)
@@ -63,9 +56,7 @@ class Rule(db.Model, AddUpdateDelete):
 
 
 class RuleSchema(ma.Schema):
-    # id = fields.Integer(dump_only=True)
     id = fields.UUID(dump_only=True)
-
     name = fields.String(required=True, validate=validate.Length(3))
     url = ma.URLFor('api.ruleresource', id='<id>', _external=True)
     contracts = fields.Nested('ContractSchema', many=True, exclude=('rule',))
@@ -77,13 +68,10 @@ class RuleSchema(ma.Schema):
 
 
 class ContractSchema(ma.Schema):
-    # id = fields.Integer(dump_only=True)
     id = fields.UUID(dump_only=True)
-
     contract_name = fields.String(required=True, validate=validate.Length(1))
     creation_date = fields.DateTime()
     rule = fields.Nested('RuleSchema', exclude=('contracts',))
-    # exclude=('contracts',)
     url = ma.URLFor('api.contractresource', id='<id>', _external=True)
     information = fields.String(validate=validate.Length(1))
 

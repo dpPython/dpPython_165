@@ -76,7 +76,7 @@ class ContractListResource(Resource):
             rule_name = request_dict['rule']['name']
             rule = Rule.query.filter_by(name=rule_name).first()
             if rule is None:
-                # Create a new Rule
+                # Create a new rule
                 rule = Rule(name=rule_name,
                             f_operand = request_dict['f_operand'],
                             s_operand = request_dict['s_operand'],
@@ -163,7 +163,6 @@ class RuleListResource(Resource):
                 s_operand=request_dict['s_operand'],
                 operator=request_dict['operator'],
                 coefficient=request_dict['coefficient'])
-            # rule = Rule(request_dict['name'])
             rule.add(rule)
             query = Rule.query.get(rule.id)
             result = rule_schema.dump(query).data
