@@ -33,11 +33,13 @@ class ProjectsInitializer(Resource):
         project_name = data['name']
         contract_id = data['contract_id']
         project = Projects(name=project_name, contract_id=contract_id, status='default')
+        print(project.id)
 
         with session() as db:
             db.add(project)
+            project_id = db.query(Projects).filter(Projects.contract_id == contract_id).first()
 
-        return {'status': 'create_successfully'}
+            return {'status': 'create_successfully', 'id': str(project_id)}
 
 
 # /projects/<id>
