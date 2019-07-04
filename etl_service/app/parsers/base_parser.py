@@ -14,8 +14,7 @@ CURRENCY = {
 def process_currency(value):
     separetaor = len(value) - 1
     currency_value = value[:separetaor]
-    currency = CURRENCY.get(value[separetaor:])
-    return [currency, currency_value]
+    return currency_value
 
 
 def process_publish_date(value):
@@ -28,6 +27,13 @@ ACTIONS = {
     'get_currency': process_currency,
     'due_to': process_publish_date,
     '': lambda x: x
+    }
+
+TYPES = {
+    'decimal': lambda x: float(x),
+    'int': lambda x: int(x),
+    'str': lambda x: str(x),
+    'bool': lambda x: bool(x)
     }
 
 

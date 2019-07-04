@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
 
 from flask import jsonify
+from json import loads
 from requests import get, put, post
+
+LOGGED_IN = 'logged in'
 
 
 class BasicSender(ABC):
@@ -21,11 +24,17 @@ class BasicSender(ABC):
 
 
 class SessionService(BasicSender):
-    basic_url = 'http://authentication_service/sessions/{uuid}'.format(uuid='')
+    basic_url = 'http://authentication_service:6000/sessions/{uuid}'.format(
+        uuid='')
 
     def get(self, auth_session_uuid):
         session = get(self.basic_url.format(uuid=auth_session_uuid))
-        return session
+        json_response = loads(session.text)
+        if json_response.get('status') == LOGGED_IN:
+            json_response.status_code = 200
+        else:
+            json_response.status_code = 300
+        return json_response
 
     def post(self, *args, **kwargs):
         pass
@@ -35,7 +44,8 @@ class SessionService(BasicSender):
 
 
 class ProjectService(BasicSender):
-    basic_url = "http://projects_service/api/projects/{uuid}".format(uuid='')
+    basic_url = "http://projects_service:5000/api/projects/{uuid}".format(
+        uuid='')
 
     def post(self, project_service_uuid, data):
         data_chunk = jsonify(data)
