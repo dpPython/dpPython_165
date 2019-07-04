@@ -9,6 +9,7 @@ from .utils.session import session
 
 DATA = 0
 ERRORS = 1
+
 project_schema = ProjectSchema()
 data_schema = DataSchema()
 status_schema = StatusSchema()

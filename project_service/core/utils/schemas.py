@@ -13,10 +13,10 @@ class ProjectSchema(Schema):
 
 
 class DataNestedSchema(Schema):
-    filed_1 = fields.Integer()
-    filed_2 = fields.Integer()
+    field_1 = fields.Integer()
+    field_2 = fields.Integer()
     field_3 = fields.Float()
-    filed_4 = fields.Integer()
+    field_4 = fields.Integer()
     field_5 = fields.Str()
     field_6 = fields.Float()
     field_7 = fields.Integer()
