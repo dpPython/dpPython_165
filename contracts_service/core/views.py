@@ -1,12 +1,8 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_restful import Api, Resource
-from models import db, Rule, RuleSchema, Contract, ContractSchema
+from core.models import db, Rule, RuleSchema, Contract, ContractSchema
 from sqlalchemy.exc import SQLAlchemyError
-import status
-from sqlalchemy.dialects.postgresql import UUID
-from uuid import uuid4
-import requests
-
+from core import status
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
