@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, g
 from flask_uploads import configure_uploads
 
+from .middlewares.login_control_middleware import LoginRequiredMiddleware
 from .services import services_senders as s
 from .api import api_1_0_blueprint
 from .config import FlaskConfig
@@ -27,7 +28,15 @@ def create_app():
     register_errors(app_init, (300, 400))
     app_init.projects = s.ProjectService()
     app_init.session_handler = s.SessionService()
+    app_init.wsgi_app = LoginRequiredMiddleware(app_init.wsgi_app, app_init)
     return app_init
 
 
 app = create_app()
+
+
+@app.after_request
+def set_auth_header(response):
+    auth_cred = g.auth_cred
+    response.headers['Authorization'] = auth_cred
+    return response
